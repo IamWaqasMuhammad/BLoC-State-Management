@@ -1,4 +1,9 @@
+import 'package:bloc_state_management/feature/counter/presentation/bloc/counter_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/counter_bloc.dart';
+import '../bloc/counter_state.dart';
 
 class CounterScreen extends StatelessWidget {
   const CounterScreen({super.key});
@@ -20,25 +25,41 @@ class CounterScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 2,
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
-        onPressed: () {},
-        child: Icon(Icons.add, color: Colors.white, size: 30),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-            child: Text(
-              '0',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: Colors.deepPurple,
-                fontSize: 60,
-                fontStyle: FontStyle.italic,
+          BlocBuilder<CounterBloc, CounterState>(
+            builder: (context, state) => Center(
+              child: Text(
+                state.counter.toString(),
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.deepPurple,
+                  fontSize: 60,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  context.read<CounterBloc>().add(IncrementCounterEvent());
+                },
+                child: Text('Increment'),
+              ),
+              SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<CounterBloc>().add(DecrementCounterEvent());
+                },
+                child: Text('Decrement'),
+              ),
+            ],
           ),
         ],
       ),
