@@ -1,3 +1,5 @@
+import 'package:bloc_state_management/feature/checkbox/presentation/bloc/check_box_bloc.dart';
+import 'package:bloc_state_management/feature/checkbox/presentation/screens/check_box_screen.dart';
 import 'package:bloc_state_management/feature/counter/presentation/bloc/counter_bloc.dart';
 import 'package:bloc_state_management/feature/counter/presentation/screens/counter_screen.dart';
 import 'package:bloc_state_management/feature/slider/presentations/screen/slider_screen.dart';
@@ -17,19 +19,18 @@ class MyApp extends StatelessWidget {
   /// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SliderBloc(),
-      child: BlocProvider(
-        create: (context) => SwitchBloc(),
-        child: BlocProvider(
-          create: (_) => CounterBloc(),
-          child: MaterialApp(
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                  colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-          home: SliderScreen(),
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SliderBloc()),
+        BlocProvider(create: (context) => CounterBloc()),
+        BlocProvider(create: (context) => SwitchBloc()),
+        BlocProvider(create: (context) => CheckBoxBloc()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+        home: CheckBoxScreen(),
       ),
-    ),);
+    );
   }
 }

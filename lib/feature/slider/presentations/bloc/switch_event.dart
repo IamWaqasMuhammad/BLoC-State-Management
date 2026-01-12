@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class SwitchEvent {
+abstract class SwitchEvent extends Equatable {
 
   const SwitchEvent();
 
